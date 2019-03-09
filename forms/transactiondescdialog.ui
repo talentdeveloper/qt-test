@@ -11,13 +11,19 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string notr="true">Transaction details</string>
+   <string>Transaction details</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background:'#0a2634';</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTextEdit" name="detailText">
      <property name="toolTip">
       <string>This pane shows a detailed description of the transaction</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:&quot;#002d3f&quot;;</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -26,6 +32,50 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="styleSheet">
+      <string notr="true">QPushButton { 
+ background-color: &quot;#002d3f&quot;;
+	border:1px solid gray;
+	color:white;
+	outline: none;
+	padding:10px;
+}
+
+QPushButton:pressed {
+   background-color: &quot;#002d3f&quot;;
+border:1px solid gray;
+	color:white;
+
+}
+QPushButton:focus:pressed { 
+    background: &quot;#003750&quot;;
+	border:1px solid #0adbf0;
+	color:white;
+
+ }
+QPushButton:focus { 
+   background-color: &quot;#002d3f&quot;;
+	border:1px solid gray;
+	color:white;
+
+}
+QPushButton:hover {
+     background-color: &quot;#002d3f&quot;;
+	border:1px solid #0adbf0;
+ }
+QPushButton:checked { 
+     background-color: &quot;#002d3f&quot;;
+border:1px solid gray;
+	color:white;
+
+ }
+QPushButton:disabled { 
+    background:'#0a2634';
+color:gray;
+border:1px solid gray;
+ }
+</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -45,12 +95,12 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>248</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>157</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
@@ -61,12 +111,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>316</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>286</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>

@@ -1,64 +1,90 @@
-// Copyright (c) 2011-2018 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-#ifndef BITCOIN_QT_OVERVIEWPAGE_H
-#define BITCOIN_QT_OVERVIEWPAGE_H
-
-#include <interfaces/wallet.h>
+#ifndef OVERVIEWPAGE_H
+#define OVERVIEWPAGE_H
 
 #include <QWidget>
-#include <memory>
+#include <QComboBox>
+#include <QDateTime>
 
-class ClientModel;
-class TransactionFilterProxy;
-class TxViewDelegate;
-class PlatformStyle;
-class WalletModel;
 
 namespace Ui {
     class OverviewPage;
 }
-
+class ClientModel;
+class WalletModel;
+class TxViewDelegate;
+class TransactionFilterProxy;
 QT_BEGIN_NAMESPACE
 class QModelIndex;
 QT_END_NAMESPACE
 
+
 /** Overview ("home") page widget */
+
 class OverviewPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit OverviewPage(const PlatformStyle *platformStyle, QWidget *parent = nullptr);
+    enum DateEnum
+    {
+        All,
+        Today,
+        ThisWeek,
+        ThisMonth,
+        LastMonth,
+        ThisYear,
+        Range
+    };
+    explicit OverviewPage(QWidget *parent = 0);
     ~OverviewPage();
 
     void setClientModel(ClientModel *clientModel);
     void setWalletModel(WalletModel *walletModel);
     void showOutOfSyncWarning(bool fShow);
 
-public Q_SLOTS:
-    void setBalance(const interfaces::WalletBalances& balances);
-
-Q_SIGNALS:
+public slots:
+    void setBalance(qint64 balance, qint64 stake, qint64 unconfirmedBalance, qint64 immatureBalance);
+    void toSend();
+    void toRecieve();
+    void priceChanged(QString price);
+    void graphChanged(QString price);
+    void indexChanged(int index);
+    void balanceButtonClicked(int index);
+signals:
     void transactionClicked(const QModelIndex &index);
-    void outOfSyncWarningClicked();
+    void moreClicked();
+    void sendTransaction();
+    void recieveTransaction();
+    void changeIndex(int index);
 
 private:
     Ui::OverviewPage *ui;
     ClientModel *clientModel;
+
     WalletModel *walletModel;
-    interfaces::WalletBalances m_balances;
+    qint64 currentBalance;
+    qint64 currentStake;
+    qint64 currentUnconfirmedBalance;
+    qint64 currentImmatureBalance;
 
+    //QDateTimeAxis* axisx1;
+    //QValueAxis* axisy1;
+    //QDateTimeAxis* axisx2;
+    //QValueAxis* axisy2;
+    //QChart* chart;
     TxViewDelegate *txdelegate;
-    std::unique_ptr<TransactionFilterProxy> filter;
+    TransactionFilterProxy *filter;
 
-private Q_SLOTS:
+
+private slots:
+
     void updateDisplayUnit();
     void handleTransactionClicked(const QModelIndex &index);
+    void transactionClickedMethod(const QModelIndex &index);
+    void handleMoreClicked();
     void updateAlerts(const QString &warnings);
-    void updateWatchOnlyLabels(bool showWatchOnly);
-    void handleOutOfSyncWarningClicks();
+
+
 };
 
-#endif // BITCOIN_QT_OVERVIEWPAGE_H
+#endif // OVERVIEWPAGE_H
